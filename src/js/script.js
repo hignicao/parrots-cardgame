@@ -1,4 +1,4 @@
-const cartas = [
+const cards = [
 	"src/images/3parrots.gif",
 	"src/images/birthdayparrot.gif",
 	"src/images/brazilparrot.gif",
@@ -21,25 +21,25 @@ const cartas = [
 	"src/images/unicornparrot.gif",
 ];
 
-const cartasContadas = [];
+const suffledCards = [];
 let firstcard = null;
-let jogadas = 0;
-let jogadasTotais = 0;
-let acertos = 0;
+let moves = 0;
+let totalMoves = 0;
+let wins = 0;
 
-let numCartas = prompt("Com quantas cartas quer jogar? (entre 4 e 40, números pares)");
+let cardsCount = prompt("Com quantas cartas quer jogar? (entre 4 e 40, números pares)");
 
-while (numCartas < 4 || numCartas > 40 || numCartas % 2 !== 0) {
-	numCartas = prompt("Com quantas cartas quer jogar?");
+while (cardsCount < 4 || cardsCount > 40 || cardsCount % 2 !== 0) {
+	cardsCount = prompt("Com quantas cartas quer jogar?");
 }
 
 function suffleCards() {
-	for (let i = 0; i < numCartas / 2; i++) {
-		cartasContadas.push(cartas[i]);
-		cartasContadas.push(cartas[i]);
+	for (let i = 0; i < cardsCount / 2; i++) {
+		suffledCards.push(cards[i]);
+		suffledCards.push(cards[i]);
 	}
 
-	cartasContadas.sort(randomCard);
+	suffledCards.sort(randomCard);
 }
 
 function randomCard() {
@@ -51,11 +51,11 @@ suffleCards();
 function distributeCards() {
 	const cards = document.querySelector(".cards");
 
-	for (let i = 0; i < numCartas; i++) {
+	for (let i = 0; i < cardsCount; i++) {
 		cards.innerHTML += `
 		<div class="card" onclick="checkCard(this)">
 			<div class="face front-face"><img src="src/images/front.png"></div>
-			<div class="face back-face"><img src="${cartasContadas[i]}"></div>
+			<div class="face back-face"><img src="${suffledCards[i]}"></div>
 		</div>
 		`;
 	}
@@ -65,22 +65,22 @@ distributeCards();
 
 function checkCard(card) {
 	if (card.querySelector(".front-face").classList.contains("front-click") === false) {
-		if (jogadas < 1) {
+		if (moves < 1) {
 			turnCard(card);
-			jogadas++;
+			moves++;
 			firstcard = card;
-		} else if (jogadas === 1) {
+		} else if (moves === 1) {
 			turnCard(card);
 			compareCard(firstcard, card);
-			jogadas = 0;
-			jogadasTotais++;
+			moves = 0;
+			totalMoves++;
 		}
 	}
 }
 
 function compareCard(card1, card2) {
 	if (card1.querySelector(".back-face").querySelector("img").getAttribute("src") === card2.querySelector(".back-face").querySelector("img").getAttribute("src")) {
-		acertos++;
+		wins++;
 		setTimeout(checkWinner, 500);
 	} else {
 		setTimeout(turnCard, 1000, card1);
@@ -94,7 +94,7 @@ function turnCard(card) {
 }
 
 function checkWinner() {
-	if (acertos === numCartas / 2) {
-		alert("Parabéns, você venceu em " + jogadasTotais + " jogadas!");
+	if (wins === cardsCount / 2) {
+		alert("Parabéns, você venceu em " + totalMoves + " jogadas!");
 	}
 }
