@@ -22,16 +22,20 @@ const cards = [
 ];
 
 const suffledCards = [];
-let firstcard = null;
-let moves = 0;
-let totalMoves = 0;
-let wins = 0;
 
-let cardsCount = prompt("Com quantas cartas quer jogar? (entre 4 e 40, números pares)");
+let firstCard = null;
+let moves = 0,
+	totalMoves = 0,
+	wins = 0,
+	id = 0;
+	seconds = 0;
+
+let cardsCount = prompt("Com quantas cartas quer jogar? (Números pares entre 4 e 40)");
 
 while (cardsCount < 4 || cardsCount > 40 || cardsCount % 2 !== 0) {
 	cardsCount = prompt("Com quantas cartas quer jogar?");
 }
+
 
 function suffleCards() {
 	for (let i = 0; i < cardsCount / 2; i++) {
@@ -48,17 +52,26 @@ function randomCard() {
 
 suffleCards();
 
+function Timer() {
+	seconds++;
+	document.querySelector(".time").innerHTML = seconds;
+}
+
 function distributeCards() {
 	const cards = document.querySelector(".cards");
+	cards.innerHTML = "";
 
 	for (let i = 0; i < cardsCount; i++) {
 		cards.innerHTML += `
 		<div class="card" onclick="checkCard(this)">
-			<div class="face front-face"><img src="src/images/front.png"></div>
-			<div class="face back-face"><img src="${suffledCards[i]}"></div>
+		<div class="face front-face"><img src="src/images/front.png"></div>
+		<div class="face back-face"><img src="${suffledCards[i]}"></div>
 		</div>
 		`;
 	}
+
+	id = setInterval(Timer, 1000);
+
 }
 
 distributeCards();
@@ -68,10 +81,10 @@ function checkCard(card) {
 		if (moves < 1) {
 			turnCard(card);
 			moves++;
-			firstcard = card;
+			firstCard = card;
 		} else if (moves === 1) {
 			turnCard(card);
-			compareCard(firstcard, card);
+			compareCard(firstCard, card);
 			moves = 0;
 			totalMoves++;
 		}
@@ -95,6 +108,14 @@ function turnCard(card) {
 
 function checkWinner() {
 	if (wins === cardsCount / 2) {
-		alert("Parabéns, você venceu em " + totalMoves + " jogadas!");
+		clearInterval(id);
+		alert(`Parabéns, você venceu em ${totalMoves} jogadas! e levou ${seconds} segundos!`);
+		
+		let playAgain = prompt(`Você deseja joga novamente? sim ou não?`);
+		if (playAgain === "sim") {
+			window.location.reload();
+		} else if (playAgain === "não") {
+			alert("Obrigado por jogar!");
+		}
 	}
 }
