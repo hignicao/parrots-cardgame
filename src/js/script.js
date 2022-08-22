@@ -28,14 +28,13 @@ let moves = 0,
 	totalMoves = 0,
 	wins = 0,
 	id = 0;
-	seconds = 0;
+seconds = 0;
 
 let cardsCount = prompt("Com quantas cartas quer jogar? (Números pares entre 4 e 40)");
 
 while (cardsCount < 4 || cardsCount > 40 || cardsCount % 2 !== 0) {
 	cardsCount = prompt("Com quantas cartas quer jogar?");
 }
-
 
 function suffleCards() {
 	for (let i = 0; i < cardsCount / 2; i++) {
@@ -71,16 +70,21 @@ function distributeCards() {
 	}
 
 	id = setInterval(Timer, 1000);
-
 }
 
 distributeCards();
 
+function blockGame() {
+	document.querySelector(".cards").classList.add("block");
+}
+
 function checkCard(card) {
-	if (card.querySelector(".front-face").classList.contains("front-click") === false) {
+	if (card.querySelector(".front-face").classList.contains("front-click") === false && document.querySelector(".cards").classList.contains("block") === false) {
+		console.log(document.querySelector(".cards").classList.contains("block"));
 		if (moves < 1) {
 			turnCard(card);
 			moves++;
+			totalMoves++;
 			firstCard = card;
 		} else if (moves === 1) {
 			turnCard(card);
@@ -96,6 +100,7 @@ function compareCard(card1, card2) {
 		wins++;
 		setTimeout(checkWinner, 500);
 	} else {
+		blockGame();
 		setTimeout(turnCard, 1000, card1);
 		setTimeout(turnCard, 1000, card2);
 	}
@@ -104,14 +109,18 @@ function compareCard(card1, card2) {
 function turnCard(card) {
 	card.querySelector(".front-face").classList.toggle("front-click");
 	card.querySelector(".back-face").classList.toggle("back-click");
+	document.querySelector(".cards").classList.remove("block");
 }
 
 function checkWinner() {
 	if (wins === cardsCount / 2) {
 		clearInterval(id);
 		alert(`Parabéns, você venceu em ${totalMoves} jogadas! e levou ${seconds} segundos!`);
-		
+
 		let playAgain = prompt(`Você deseja joga novamente? sim ou não?`);
+		while (playAgain !== "sim" && playAgain !== "não") {
+			playAgain = prompt(`Você deseja joga novamente? sim ou não?`);
+		}
 		if (playAgain === "sim") {
 			window.location.reload();
 		} else if (playAgain === "não") {

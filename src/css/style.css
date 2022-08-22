@@ -78,3 +78,19 @@ h1 {
 .back-click {
 	transform: rotateY(0deg);
 }
+
+
+/* ------------------------RESPONSIVE------------------------ */
+
+@media (max-width: 777px) {
+
+	body {
+		margin: 40px;
+	}
+
+	h1 {
+		font-size: 36px;
+		line-height: 42px;
+	}
+	
+}
