@@ -28,12 +28,12 @@ let moves = 0,
 	totalMoves = 0,
 	wins = 0,
 	id = 0;
-seconds = 0;
+	seconds = 0;
 
-let cardsCount = prompt("Com quantas cartas quer jogar? (Números pares entre 4 e 40)");
+let cardsCount = prompt("Com quantas cartas quer jogar? (Números pares entre 4 e 14)");
 
-while (cardsCount < 4 || cardsCount > 40 || cardsCount % 2 !== 0) {
-	cardsCount = prompt("Com quantas cartas quer jogar?");
+while (cardsCount < 4 || cardsCount > 14 || cardsCount % 2 !== 0) {
+	cardsCount = prompt("Com quantas cartas quer jogar? (Números pares entre 4 e 14)");
 }
 
 function suffleCards() {
@@ -80,7 +80,6 @@ function blockGame() {
 
 function checkCard(card) {
 	if (card.querySelector(".front-face").classList.contains("front-click") === false && document.querySelector(".cards").classList.contains("block") === false) {
-		console.log(document.querySelector(".cards").classList.contains("block"));
 		if (moves < 1) {
 			turnCard(card);
 			moves++;
