@@ -1,11 +1,11 @@
 body {
-	margin: 40px 120px;
+	margin: 50px 120px;
 	background-color: #eef9bf;
 }
 
 h1 {
 	text-align: center;
-	font-family: "Roboto";
+	font-family: "Roboto", sans-serif;
 	font-weight: 700;
 	font-size: 56px;
 	line-height: 66px;
@@ -16,19 +16,25 @@ h1 {
 
 .timer {
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 5px;
+	right: 5px;
+	background-color: #a7e9af;
+	padding: 5px;
+	border: 1px solid #99cea8;
+	border-radius: 5px;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .timer p {
-	font-family: "Roboto";
+	font-family: "Roboto", sans-serif;
 	font-weight: 600;
 	font-size: 20px;
-	color: crimson;
+	color: #5d947f;
 }
 
 .time {
 	font-weight: 900;
+	color: #5d947f;
 }
 
 .cards {
@@ -60,7 +66,6 @@ h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	transition: all 1s ease;
 	position: absolute;
 	backface-visibility: hidden;
 	transition: all 1s ease;
@@ -71,11 +76,11 @@ h1 {
 	transform: rotateY(180deg);
 }
 
-.front-click {
+.flipped .front-face {
 	transform: rotateY(-180deg);
 }
 
-.back-click {
+.flipped .back-face {
 	transform: rotateY(0deg);
 }
 
@@ -85,7 +90,7 @@ h1 {
 @media (max-width: 777px) {
 
 	body {
-		margin: 40px;
+		margin: 50px;
 	}
 
 	h1 {
